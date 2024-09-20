@@ -2,11 +2,10 @@
 # Copyright (C) 2021-2023 TeamUltroid
 #
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
-# PLease read the GNU Affero General Public License in
+# Please read the GNU Affero General Public License in
 # <https://github.com/TeamUltroid/pyUltroid/blob/main/LICENSE>.
 
 from . import *
-
 
 def main():
     import os
@@ -64,6 +63,8 @@ def main():
         _plugins = "autocorrect autopic audiotools compressor forcesubscribe fedutils gdrive glitch instagram nsfwfilter nightmode pdftools profanityfilter writer youtube"
         udB.set_key("EXCLUDE_OFFICIAL", _plugins)
 
+    # Exclude 'holi' from the addons
+    addons = [addon for addon in addons if addon != 'holi']
     load_other_plugins(addons=addons, pmbot=pmbot, manager=manager, vcbot=vcbot)
 
     suc_msg = """
@@ -104,7 +105,6 @@ def main():
         f"Took {time_formatter((time.time() - start_time)*1000)} to start •ULTROID•"
     )
     LOGS.info(suc_msg)
-
 
 if __name__ == "__main__":
     main()
