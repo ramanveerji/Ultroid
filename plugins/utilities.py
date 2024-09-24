@@ -743,19 +743,19 @@ async def get_restricted_msg(event):
     if not match:
         await event.eor("`Please provide a link!`", time=5)
         return
-    
+
     xx = await event.eor("`Loading...`")
     chat, msg = get_chat_and_msgid(match)
     if not (chat and msg):
         return await event.eor(
             "Invalid link!\nEg: `https://t.me/TeamUltroid/3` or `https://t.me/c/1313492028/3`"
         )
-    
+
     try:
         message = await event.client.get_messages(chat, ids=msg)
     except BaseException as er:
         return await event.eor(f"**ERROR**\n`{er}`")
-    
+
     try:
         await event.client.send_message(event.chat_id, message)
         await xx.try_delete()
@@ -791,8 +791,16 @@ async def get_restricted_msg(event):
                         supports_streaming=True,
                     )
                 )
+
+            # Extract the original file extension
+            file_extension = os.path.splitext(message.document.attributes[0].file_name)[1]
+
+            # Rename the downloaded file to include the original extension
+            new_media_path = media_path.name + file_extension
+            os.rename(media_path.name, new_media_path)
+
             await xx.edit(get_string("com_6"))
-            media_path, _ = await event.client.fast_uploader(media_path.name, event=xx, show_progress=True, to_delete=True)
+            media_path, _ = await event.client.fast_uploader(new_media_path, event=xx, show_progress=True, to_delete=True)
 
             try:
                 await event.client.send_file(
