@@ -743,19 +743,19 @@ async def get_restricted_msg(event):
     if not match:
         await event.eor("`Please provide a link!`", time=5)
         return
-    
+
     xx = await event.eor("`Loading...`")
     chat, msg = get_chat_and_msgid(match)
     if not (chat and msg):
         return await event.eor(
             "Invalid link!\nEg: `https://t.me/TeamUltroid/3` or `https://t.me/c/1313492028/3`"
         )
-    
+
     try:
         message = await event.client.get_messages(chat, ids=msg)
     except BaseException as er:
         return await event.eor(f"**ERROR**\n`{er}`")
-    
+
     try:
         await event.client.send_message(event.chat_id, message)
         await xx.try_delete()
@@ -765,7 +765,12 @@ async def get_restricted_msg(event):
 
     if message.media:
         if isinstance(message.media, (MessageMediaPhoto, MessageMediaDocument)):
-            media_path, _ = await event.client.fast_downloader(message.document, show_progress=True, event=xx, message=get_string("com_5"))
+            if message.document:
+                filename = message.document.attributes[0].file_name if message.document.attributes else "downloaded_file"
+                media_path, _ = await event.client.fast_downloader(message.document, show_progress=True, event=xx, message=get_string("com_5"), filename=filename)
+            else:
+                await event.eor("`No document found in the message.`")
+                return
 
             caption = message.text or ""
 
