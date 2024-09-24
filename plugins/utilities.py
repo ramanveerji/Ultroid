@@ -792,7 +792,11 @@ async def get_restricted_msg(event):
                     )
                 )
             await xx.edit(get_string("com_6"))
-            media_path, _ = await event.client.fast_uploader(media_path.name, event=xx, show_progress=True, to_delete=True)
+
+            # Get the correct media path with the original extension
+            media_path = message.media.document.attributes[0].file_name
+
+            media_path, _ = await event.client.fast_uploader(media_path, event=xx, show_progress=True, to_delete=True)
 
             try:
                 await event.client.send_file(
