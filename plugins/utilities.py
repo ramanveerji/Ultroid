@@ -792,8 +792,8 @@ async def get_restricted_msg(event):
                     )
                 )
 
-            # Extract the original file extension
-            file_extension = os.path.splitext(message.document.attributes[0].file_name)[1]
+            # Extract the original file extension from the downloaded file path
+            file_extension = os.path.splitext(media_path.name)[1]
 
             # Rename the downloaded file to include the original extension
             new_media_path = media_path.name + file_extension
