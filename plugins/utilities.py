@@ -795,17 +795,17 @@ async def get_restricted_msg(event):
             # Extract the original file extension from the downloaded file path
             file_extension = os.path.splitext(media_path.name)[1]
 
-            # Rename the downloaded file to include the original extension
+            await xx.edit(get_string("com_6"))
+            media_path, _ = await event.client.fast_uploader(media_path.name, event=xx, show_progress=True, to_delete=True)
+
+            # Rename the uploaded file to include the original extension
             new_media_path = media_path.name + file_extension
             os.rename(media_path.name, new_media_path)
-
-            await xx.edit(get_string("com_6"))
-            media_path, _ = await event.client.fast_uploader(new_media_path, event=xx, show_progress=True, to_delete=True)
 
             try:
                 await event.client.send_file(
                     event.chat_id,
-                    media_path,
+                    new_media_path,
                     caption=caption,
                     force_document=False,
                     supports_streaming=True if message.video else False,
@@ -817,7 +817,7 @@ async def get_restricted_msg(event):
                     caption = caption[:CAPTION_LIMIT] + "..."
                 await event.client.send_file(
                     event.chat_id,
-                    media_path,
+                    new_media_path,
                     caption=caption,
                     force_document=False,  # Set to True if you want to send as a document
                     supports_streaming=True if message.video else False,
