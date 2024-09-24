@@ -799,8 +799,8 @@ async def get_restricted_msg(event):
             media_path, _ = await event.client.fast_uploader(media_path.name, event=xx, show_progress=True, to_delete=True)
 
             # Rename the uploaded file to include the original extension
-            new_media_path = media_path + file_extension
-            os.rename(media_path, new_media_path)
+            new_media_path = media_path.name + file_extension
+            os.rename(media_path.name, new_media_path)
 
             try:
                 await event.client.send_file(
