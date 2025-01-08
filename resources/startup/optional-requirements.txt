@@ -5,7 +5,6 @@ git+https://github.com/ufoptg/akipy.git
 apscheduler
 aiohttp
 bs4
-covid
 emoji
 enhancer>=0.3.4
 ffmpeg
