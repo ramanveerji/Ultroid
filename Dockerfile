@@ -3,10 +3,7 @@
 # This file is a part of < https://github.com/TeamUltroid/Ultroid/ >
 # PLease read the GNU Affero General Public License in <https://www.github.com/TeamUltroid/Ultroid/blob/main/LICENSE/>.
 
-# FROM theteamultroid/ultroid:main 
-# added following lines to load the bot from the local directory
-FROM python:3.9
-WORKDIR /app
+FROM theteamultroid/ultroid:main
 
 # set timezone
 ENV TZ=Asia/Kolkata
